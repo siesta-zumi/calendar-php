@@ -12,6 +12,14 @@
     }
     $body .= sprintf('<td class = "youbi_%d">%d</td>', $day->format('w'), //wは曜日を０〜６で表示
     $day->format('d')); //欲しいのは'd'(日付だけ) dは日付を２桁で表示
+
+    //翌月の日付を取得
+    $head = ""; //からのheadを定義 （headは月初の意味）
+    $firstDayOfNextMonth = new DateTime('first day of next month'); //翌月の月初を定義
+    while($firstDayOfNextMonth -> format('w') === 0) { //翌月の曜日が日曜日になるまで繰り返す。
+    $head .= sprintf('<td class = "gray">%d</d>', $firstDayOfNextMonth -> format('d')); //空のheadにclass:grayの日付を追加
+    $firstDayOfNextMonth -> add(new DateInterval('P1D')); //こちらの間隔も1日ごと
+  }
   }
 
 ?>
