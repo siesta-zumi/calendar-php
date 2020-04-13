@@ -3,7 +3,7 @@
   //前月の日付を取得
   $tail = ""; //空のtailを定義（tailは終わりという意味）
   $lastDayOfPrevMonth = new DateTime('last day of previous month');
-  
+
   while ($lastDayOfPrevMonth -> format('w') < 6) { //曜日が土曜日よりも小さい間
     $tail = sprintf('<td class = "gray">%d</td>', $lastDayOfPrevMonth -> format('d')) . $tail; //ここではtailの前に取得した日付を挿入する
     $lastDayOfPrevMonth -> sub(new DateInterval('P1D'));
@@ -65,23 +65,7 @@
       </tr>
       <tr>
         <?php echo $tail . $body . $head; ?>
-        <!--<td class="youbi_0">1</td>
-        <td class="youbi_1">2</td>
-        <td class="youbi_2">3</td>
-        <td class="youbi_3">4</td>
-        <td class="youbi_4 today">5</td>
-        <td class="youbi_5">6</td>
-        <td class="youbi_6">7</td>
-      </tr>
-      <tr>
-      
-        <td class="youbi_0">30</td>
-        <td class="youbi_1">31</td>
-        <td class="gray">1</td>
-        <td class="gray">2</td>
-        <td class="gray">3</td>
-        <td class="gray">4</td>
-        <td class="gray">5</td> -->
+       
       </tr>
       
     </tbody>
