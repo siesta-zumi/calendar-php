@@ -1,12 +1,15 @@
 <?php
+
+  //前月の日付を取得
   $tail = ""; //空のtailを定義（tailは終わりという意味）
   $lastDayOfPrevMonth = new DateTime('last day of previous month');
+  
   while ($lastDayOfPrevMonth -> format('w') < 6) { //曜日が土曜日よりも小さい間
     $tail = sprintf('<td class = "gray">%d</td>', $lastDayOfPrevMonth -> format('d')) . $tail; //ここではtailの前に取得した日付を挿入する
     $lastDayOfPrevMonth -> sub(new DateInterval('P1D'));
   }
 
-
+  //今月の日付を取得
   $body = "";
   $start = new DateTime('first day of this month'); //今月の1日
   $interval = new DateInterval('P1D'); //1日間隔
@@ -20,15 +23,15 @@
     }
     $body .= sprintf('<td class = "youbi_%d">%d</td>', $day->format('w'), //wは曜日を０〜６で表示
     $day->format('d')); //欲しいのは'd'(日付だけ) dは日付を２桁で表示
+  }
 
-    //翌月の日付を取得
-    $head = ""; //からのheadを定義 （headは月初の意味）
-    $firstDayOfNextMonth = new DateTime('first day of next month'); //翌月の月初を定義
+  //翌月の日付を取得
+  $head = ""; //からのheadを定義 （headは月初の意味）
+  $firstDayOfNextMonth = new DateTime('first day of next month'); //翌月の月初を定義
 
-    while($firstDayOfNextMonth -> format('w') === 0) { //翌月の曜日が日曜日になるまで繰り返す。
-      $head .= sprintf('<td class = "gray">%d</d>', $firstDayOfNextMonth -> format('d')); //空のheadにclass:grayの日付を追加
-      $firstDayOfNextMonth -> add(new DateInterval('P1D')); //こちらの間隔も1日ごと
-    }
+  while($firstDayOfNextMonth -> format('w') === 0) { //翌月の曜日が日曜日になるまで繰り返す。
+    $head .= sprintf('<td class = "gray">%d</d>', $firstDayOfNextMonth -> format('d')); //空のheadにclass:grayの日付を追加
+    $firstDayOfNextMonth -> add(new DateInterval('P1D')); //こちらの間隔も1日ごと
   }
 
 ?>
@@ -61,7 +64,7 @@
         <td>Sat</td>
       </tr>
       <tr>
-        <?php echo $body; ?>
+        <?php echo $tail . $body . $head; ?>
         <!--<td class="youbi_0">1</td>
         <td class="youbi_1">2</td>
         <td class="youbi_2">3</td>
