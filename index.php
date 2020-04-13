@@ -1,14 +1,19 @@
 <?php
   $body = "";
-  $period = new DatePeriod(
-    new DateTime('first day of this month'),
-    new DateInterval('P1D'),
-    new DateTime('first day of next month')
-  );
+  $start = new DateTime('first day of this month'); //今月の1日
+  $interval = new DateInterval('P1D'); //1日間隔
+  $end = new DateTime('first day of next month'); //来月の1日（endは含まないので今月の末日になる）
 
-  foreach($period as $day) {
-    $body .= sprintf('<td>%d</td>', $day->format('d'));
+  $period = new DatePeriod( $start, $interval, $end ); //引数は（開始、間隔、終了の順番）
+
+  foreach($period as $day) { //foreachで１つずつ採り出して<td>のなかに入れる。
+    if ($day->format('w') % 7 === 0) {
+      $body .= '</tr><tr>';
+    }
+    $body .= sprintf('<td class = "youbi_%d">%d</td>', $day->format('w'), //wは曜日を０〜６で表示
+    $day->format('d')); //欲しいのは'd'(日付だけ) dは日付を２桁で表示
   }
+
 ?>
 
 <!DOCTYPE html>
