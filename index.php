@@ -1,11 +1,11 @@
 <?php
   try {
-    if (!isset($_GET['t']) || !preg_match('/\A\d{4}-\d{2}\z/', $_GET['t'])) {
-      throw new Exception();
+    if (!isset($_GET['t']) || !preg_match('/\A\d{4}-\d{2}\z/', $_GET['t'])) { //tがない場合や書式が会ってない場合（４桁、２桁じゃない）
+      throw new Exception(); //例外を投げます。
     }
-    $thisMonth = new DateTime($_GET['t']);
-  } catch (Exception $e) {
-    $thisMonth = new DateTime('first day of this month');
+    $thisMonth = new DateTime($_GET['t']); //会っていればこれでOK
+  } catch (Exception $e) { //例外をキャッチしたら
+    $thisMonth = new DateTime('first day of this month'); //これを行います。
   }
 
   //年月部分の定義（月情報の取得）
