@@ -1,14 +1,14 @@
 <?php
-  $t = '2020-04'; //2020-04を仮の変数tとする
-  $thisMonth = new DateTime('t'); //2020-04-01
-  $yearMonth = $thisMonth ->format('F Y'); //Fは January からDecsmber Yは(Year)4桁で2020など この場合は April 2020
+  $t = '2020-05'; //2020-04を仮の変数tとする
+  $thisMonth = new DateTime($t); //2020-04-01
+  $yearMonth = $thisMonth->format('F Y'); //Fは January からDecsmber Yは(Year)4桁で2020など この場合は April 2020
 
 
 
   //前月の日付を取得
   $tail = ""; //空のtailを定義（tailは終わりという意味）
-  $lastDayOfPrevMonth = new DateTime('last day of' . $yearMonth . '-1 month');
-
+  $lastDayOfPrevMonth = new DateTime('last day of ' . $yearMonth . ' -1 month');
+ 
   while ($lastDayOfPrevMonth -> format('w') < 6) { //曜日が土曜日よりも小さい間
     $tail = sprintf('<td class = "gray">%d</td>', $lastDayOfPrevMonth -> format('d')) . $tail; //ここではtailの前に取得した日付を挿入する
     $lastDayOfPrevMonth -> sub(new DateInterval('P1D'));
@@ -18,7 +18,7 @@
   $body = "";
   $start = new DateTime('first day of' . $yearMonth); //今月の1日
   $interval = new DateInterval('P1D'); //1日間隔
-  $end = new DateTime('first day of' . $yearMonth . '+1 month'); //来月の1日（endは含まないので今月の末日になる）
+  $end = new DateTime('first day of ' . $yearMonth . ' +1 month'); //来月の1日（endは含まないので今月の末日になる）
 
   $period = new DatePeriod( $start, $interval, $end ); //引数は（開始、間隔、終了の順番）
 
