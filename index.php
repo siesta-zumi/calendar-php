@@ -1,16 +1,14 @@
 <?php
-  try {
+  try { //tryブロックで囲んで
     if (!isset($_GET['t']) || !preg_match('/\A\d{4}-\d{2}\z/', $_GET['t'])) { //tがない場合や書式が会ってない場合（４桁、２桁じゃない）
       throw new Exception(); //例外を投げます。
     }
-    $thisMonth = new DateTime($_GET['t']); //会っていればこれでOK
+    $thisMonth = new DateTime($_GET['t']); //合っていればこれでOK
   } catch (Exception $e) { //例外をキャッチしたら
     $thisMonth = new DateTime('first day of this month'); //これを行います。
   }
-
   //年月部分の定義（月情報の取得）
-  //$t = '2020-04'; //2020-04を仮の変数tとする
-  $thisMonth = new DateTime($_GRT['t']); //2020-04-01
+  
   $yearMonth = $thisMonth->format('F Y'); //Fは January からDecsmber Yは(Year)4桁で2020など この場合は April 2020
 
 
