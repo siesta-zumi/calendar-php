@@ -1,4 +1,9 @@
 <?php
+  $t = '2020-04'; //2020-04を仮の変数tとする
+  $thisMonth = new DateTime('t'); //2020-04-01
+  $yearMonth = $thisMonth ->format('F Y'); //Fは January からDecsmber Yは(Year)4桁で2020など この場合は April 2020
+
+
 
   //前月の日付を取得
   $tail = ""; //空のtailを定義（tailは終わりという意味）
