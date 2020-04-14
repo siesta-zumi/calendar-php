@@ -7,7 +7,7 @@
 
   //前月の日付を取得
   $tail = ""; //空のtailを定義（tailは終わりという意味）
-  $lastDayOfPrevMonth = new DateTime('last day of previous month');
+  $lastDayOfPrevMonth = new DateTime('last day of' . $yearMonth . '-1 month');
 
   while ($lastDayOfPrevMonth -> format('w') < 6) { //曜日が土曜日よりも小さい間
     $tail = sprintf('<td class = "gray">%d</td>', $lastDayOfPrevMonth -> format('d')) . $tail; //ここではtailの前に取得した日付を挿入する
@@ -16,9 +16,9 @@
 
   //今月の日付を取得
   $body = "";
-  $start = new DateTime('first day of this month'); //今月の1日
+  $start = new DateTime('first day of' . $yearMonth); //今月の1日
   $interval = new DateInterval('P1D'); //1日間隔
-  $end = new DateTime('first day of next month'); //来月の1日（endは含まないので今月の末日になる）
+  $end = new DateTime('first day of' . $yearMonth . '+1 month'); //来月の1日（endは含まないので今月の末日になる）
 
   $period = new DatePeriod( $start, $interval, $end ); //引数は（開始、間隔、終了の順番）
 
@@ -32,7 +32,7 @@
 
   //翌月の日付を取得
   $head = ""; //からのheadを定義 （headは月初の意味）
-  $firstDayOfNextMonth = new DateTime('first day of next month'); //翌月の月初を定義
+  $firstDayOfNextMonth = new DateTime('first day of' . $yearMonth . '+1 month'); //翌月の月初を定義
 
   while ($firstDayOfNextMonth -> format('w') > 0) { //翌月の曜日が日曜日になるまで繰り返す。
     $head .= sprintf('<td class = "gray">%d</d>', $firstDayOfNextMonth -> format('d')); //空のheadにclass:grayの日付を追加
@@ -56,7 +56,7 @@
     <thead>
     <tr>
       <th> <a href= "">&laquo;</th>
-      <th colspan = "5">August 2020</th>
+      <th colspan = "5"><?php echo $yearMonth; ?></th>
       <th><a href= "">&raquo;</th>
     </tr>
     </thead>
