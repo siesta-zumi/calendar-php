@@ -1,6 +1,16 @@
 <?php
-  $t = '2020-05'; //2020-04を仮の変数tとする
-  $thisMonth = new DateTime($t); //2020-04-01
+  try {
+    if (!isset($_GET['t']) || !preg_match('/\A\d{4}-\d{2}\z/', $_GET['t'])) {
+      throw new Exception();
+    }
+    $thisMonth = new DateTime($_GET['t']);
+  } catch (Exception $e) {
+    $thisMonth = new DateTime('first day of this month');
+  }
+
+  //年月部分の定義（月情報の取得）
+  //$t = '2020-04'; //2020-04を仮の変数tとする
+  $thisMonth = new DateTime($_GRT['t']); //2020-04-01
   $yearMonth = $thisMonth->format('F Y'); //Fは January からDecsmber Yは(Year)4桁で2020など この場合は April 2020
 
 
