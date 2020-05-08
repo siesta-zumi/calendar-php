@@ -1,4 +1,11 @@
 <?php
+
+  function h($s) {
+    return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
+    
+  }
+
+
   try { //tryブロックで囲んで
     if (!isset($_GET['t']) || !preg_match('/\A\d{4}-\d{2}\z/', $_GET['t'])) { //tがない場合や書式が会ってない場合（４桁、２桁じゃない）
       throw new Exception(); //例外を投げます。
@@ -7,6 +14,11 @@
   } catch (Exception $e) { //例外をキャッチしたら
     $thisMonth = new DateTime('first day of this month'); //これを行います。
   }
+
+  $dt = clone $thisMonth;
+  $prev = $dt -> modify('-1 month')-> format('Y-m');
+  $dt = clone $thisMonth;
+  $next = $dt -> modify('+1 month')-> format('Y-m');
   //年月部分の定義（月情報の取得）
   
   $yearMonth = $thisMonth->format('F Y'); //Fは January からDecsmber Yは(Year)4桁で2020など この場合は April 2020
@@ -27,14 +39,16 @@
   $start = new DateTime('first day of' . $yearMonth); //今月の1日
   $interval = new DateInterval('P1D'); //1日間隔
   $end = new DateTime('first day of ' . $yearMonth . ' +1 month'); //来月の1日（endは含まないので今月の末日になる）
-
   $period = new DatePeriod( $start, $interval, $end ); //引数は（開始、間隔、終了の順番）
+
+  $today = new DateTime('today');
 
   foreach($period as $day) { //foreachで１つずつ採り出して<td>のなかに入れる。
     if ($day->format('w') % 7 === 0) {
       $body .= '</tr><tr>';
     }
-    $body .= sprintf('<td class = "youbi_%d">%d</td>', $day->format('w'), //wは曜日を０〜６で表示
+    $todayClass = ($day ->format('Y-m-d') === $today->format('Y-m-d'))?'today': '';
+    $body .= sprintf('<td class = "youbi_%d %s">%d</td>', $day->format('w'), $todayClass, //wは曜日を０〜６で表示
     $day->format('d')); //欲しいのは'd'(日付だけ) dは日付を２桁で表示
   }
 
@@ -62,11 +76,11 @@
 <body>
   <table>
     <thead>
-    <tr>
-      <th> <a href= "">&laquo;</th>
-      <th colspan = "5"><?php echo $yearMonth; ?></th>
-      <th><a href= "">&raquo;</th>
-    </tr>
+      <tr>
+        <th><a href= "/?t=<?php echo h($prev); ?>">&laquo;</th>
+        <th colspan = "5"><?php echo h($yearMonth); ?></th>
+        <th><a href="/?t=<?php echo h($next); ?>">&raquo;</th>
+      </tr>
     </thead>
     <tbody>
     <tr>
@@ -82,7 +96,7 @@
 
     </tbody>
     <tfoot>
-    <th colspan = "7"><a href = "">Today</th>
+    <th colspan = "7"><a href = "/">Today</th>
     </tfoot>
     
   </table>
